@@ -274,8 +274,8 @@ class Worker : public Thread {
 
  public:
   EventCenter center;
-  explicit Worker(CephContext *c): cct(c), done(false), center(c) {
-    center.init(100, 0);
+  explicit Worker(CephContext *c, int i): cct(c), done(false), center(c) {
+    center.init(100, i);
   }
   void stop() {
     done = true; 
@@ -305,7 +305,7 @@ class CountEvent: public EventCallback {
 };
 
 TEST(EventCenterTest, DispatchTest) {
-  Worker worker1(g_ceph_context), worker2(g_ceph_context);
+  Worker worker1(g_ceph_context, 0), worker2(g_ceph_context, 1);
   atomic_t count(0);
   Mutex lock("DispatchTest::lock");
   Cond cond;

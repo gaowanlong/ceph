@@ -135,8 +135,6 @@ EventCenter::~EventCenter()
   if (notify_send_fd >= 0)
     ::close(notify_send_fd);
 
-  if (global_centers && global_centers->centers[idx] == this)
-    global_centers->centers[idx] = nullptr;
   delete driver;
   delete notify_handler;
 }
